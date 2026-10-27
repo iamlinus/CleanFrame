@@ -1302,7 +1302,10 @@
   function fieldTransform(el, x, y, width, height) {
     el._placement = { x: x, y: y, width: width, height: height };
     el.style.transformOrigin = (x + width / 2) + 'px ' + (y + height / 2) + 'px';
-    el.style.transform = 'translate3d(' + (-x) + 'px,' + (-y) + 'px,0)' + (S.c.bg === 'photo' && S.c.material === 'tint' && !REDUCED_MOTION ? ' scale(1.04)' : '');
+    // 2D translate (not translate3d): a 3D transform promotes the field to its own compositing
+    // layer, which on Tizen 5.0 (M63) escapes the lens/plate's overflow+border-radius clip and
+    // bleeds the glass past the rounded corners. A 2D transform stays in the parent's layer.
+    el.style.transform = 'translate(' + (-x) + 'px,' + (-y) + 'px)' + (S.c.bg === 'photo' && S.c.material === 'tint' && !REDUCED_MOTION ? ' scale(1.04)' : '');
   }
   function renderList(hs) {
     var items = hs.items, n = items.length, compact = hs.mode === 'arrange', pitch = compact ? PH_COMPACT_PITCH : PH_PITCH;

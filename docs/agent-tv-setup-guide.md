@@ -117,6 +117,8 @@ Use Device Manager or SDB to connect to **your TV's address on port 26101**. Hav
 
 **If the connection is refused:** check both addresses and network isolation first. A responding TV information endpoint on port 8001 does not establish an SDB connection. On the reference Frame, the prompted restart was insufficient: developer access worked after switching off at the wall, waiting ten seconds and restoring power. Arrange this with the owner; never interrupt an update. A short Power press may enter Art Mode rather than restart the TV. Samsung also describes unplugging and reconnecting in its [developer debugging instructions](https://developer.samsung.com/smarttv/develop/extension-libraries/smart-view-sdk/receiver-apps/debugging.html).
 
+**Older TVs (2019 Frame, Tizen 5.0):** the SDB server from a current Tizen Studio (4.2.36) could not connect to a QE55LS03R, while the SDB shipped with Samsung's TV web CLI (4.2.25) could. Keep Tizen Studio and its Certificate Manager closed during TV work; they restart their own SDB server on the same port. That TV also refused SDB in Art Mode and after sleep until it was switched off at the wall.
+
 Keep developer access on the trusted LAN. Do not add router port forwarding to solve a connection failure.
 
 **Agent prompt**

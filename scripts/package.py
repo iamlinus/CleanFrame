@@ -11,7 +11,11 @@ import zipfile
 from font_assets import write_widget_archive
 
 ROOT = Path(__file__).resolve().parents[1]
-SDK = ROOT / '.local/tizen-sdk'
+# Resolve the SDK symlink to its real path. Tizen's own tizen.sh builds the Java
+# -cp from the SDK path unquoted, so spaces in the workspace path (e.g. a macOS
+# "Samsung TV" folder) would break class loading. Keep the SDK itself at a
+# space-free path; .resolve() is a harmless no-op on a space-free setup.
+SDK = (ROOT / '.local/tizen-sdk').resolve()
 PRIVATE = ROOT / '.local/certificates/private'
 CLI = SDK / 'tools/ide/bin/tizen'
 password_file = PRIVATE / 'certificate-password.txt'
